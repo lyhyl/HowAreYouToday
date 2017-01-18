@@ -10,8 +10,8 @@
             MakeAlert("你上传的不是自拍吧?");
             fail = true;
         }
-        if (!fail && input.files[0].size > 4 * 1024 * 1024) {
-            MakeAlert("图片太大辣,换一张吧(<4M)");
+        if (!fail && input.files[0].size > 8 * 1024 * 1024) {
+            MakeAlert("图片太大辣,换一张吧(<8M)");
             fail = true;
         }
         if (!fail && input.files[0].size < 1 * 1024) {
@@ -35,7 +35,7 @@
 }
 
 function ValidateSingleInput(input) {
-    var ext = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+    var ext = [".jpg", ".jpeg", ".png"];
     var fn = input.value;
     if (fn.length > 0) {
         for (var i = 0; i < ext.length; i++) {

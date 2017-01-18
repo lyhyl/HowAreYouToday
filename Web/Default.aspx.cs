@@ -48,7 +48,7 @@ namespace HRUTWeb
             if (e.Exception == null)
             {
                 MemoryStream ms = new MemoryStream();
-                ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+                ImageCodecInfo jpgEncoder = BitmapExtensions.GetEncoderInfo(ImageFormat.Jpeg);
                 EncoderParameters encoderParams = new EncoderParameters(1);
                 EncoderParameter encoderParam = new EncoderParameter(Encoder.Quality, 100L);
                 encoderParams.Param[0] = encoderParam;
@@ -69,15 +69,6 @@ namespace HRUTWeb
             {
                 File.Delete(filename);
             }
-        }
-
-        private ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-                if (codec.FormatID == format.Guid)
-                    return codec;
-            return null;
         }
     }
 }

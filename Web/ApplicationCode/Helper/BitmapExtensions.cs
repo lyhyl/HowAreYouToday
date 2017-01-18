@@ -49,6 +49,7 @@ namespace HRUTWeb
         {
             using (Bitmap org = new Bitmap(fileName))
             {
+                RotateImage(org);
                 Size size = org.Size;
                 double mxlen = mxl;
                 int len = Math.Max(size.Width, size.Height);
@@ -75,6 +76,37 @@ namespace HRUTWeb
                     return bmp;
                 }
             }
+        }
+
+        private static void RotateImage(Image img)
+        {
+            if (img.RawFormat != ImageFormat.Jpeg)
+                return;
+            const int exif = 0x0112;
+            if (Array.IndexOf(img.PropertyIdList, exif) > -1)
+            {
+                switch (img.GetPropertyItem(exif).Value[0])
+                {
+                    case 1: /* No rotation required.*/ break;
+                    case 2: img.RotateFlip(RotateFlipType.RotateNoneFlipX); break;
+                    case 3: img.RotateFlip(RotateFlipType.Rotate180FlipNone); break;
+                    case 4: img.RotateFlip(RotateFlipType.Rotate180FlipX); break;
+                    case 5: img.RotateFlip(RotateFlipType.Rotate90FlipX); break;
+                    case 6: img.RotateFlip(RotateFlipType.Rotate90FlipNone); break;
+                    case 7: img.RotateFlip(RotateFlipType.Rotate270FlipX); break;
+                    case 8: img.RotateFlip(RotateFlipType.Rotate270FlipNone); break;
+                }
+                img.RemovePropertyItem(exif);
+            }
+        }
+
+        public static ImageCodecInfo GetEncoderInfo(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+                if (codec.FormatID == format.Guid)
+                    return codec;
+            return null;
         }
     }
 }
