@@ -34,7 +34,7 @@ namespace HRUTWeb
         public PhotoHandler()
         {
             detectors = new IDetectAdapter[] {
-                AffdexAdapter.CreateSingleton(FaceDetectorMode.LARGE_FACES),
+                //AffdexAdapter.CreateSingleton(FaceDetectorMode.LARGE_FACES),
                 new MSAdapter()
             };
 
