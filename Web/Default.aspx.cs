@@ -65,6 +65,7 @@ namespace HRUTWeb
                 HandledImage.ImageUrl = "Content/ui/faceNotFound.jpg";
                 HandledMessage.Text = e.Exception.Message;
             }
+
             if (File.Exists(filename))
             {
                 File.Delete(filename);
